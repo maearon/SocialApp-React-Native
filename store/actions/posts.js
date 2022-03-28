@@ -12,7 +12,14 @@ export const ADD_COMMENT_TEMP = 'ADD_COMMENT_TEMP';
 
 export const fetchPosts = () => {
     return async (dispatch, getState) => {
-        const response = await fetch(`${ENV.apiUrl}/rn/allposts`);
+        // const response = await fetch(`${ENV.apiUrl}`);
+        // error create post
+        const response = await fetch(`${ENV.apiUrl}`, {
+            headers: {
+                'Content-Type': "application/json",
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.V0z1TcfuH6MgWtsXxcz0cejD1e6ES3lvfF6uqtU6CAg PaAp1tWxAtCtYMcgge8-9Q`
+            },
+        });
 
         const resData = await response.json();
         if(resData.error){
@@ -34,14 +41,21 @@ export const createPost = (title, body, base64Data, imageType) => {
 
         const token = getState().auth.token;
         const userId = getState().auth.user._id;
-        const postData = {title, body, base64Data, imageType}
+        const postData = {
+            micropost: {
+                // title, 
+                content: body, 
+                // base64Data, 
+                // imageType
+            }
+        }
         // console.log(JSON.stringify(postData))
         // any async code
-        const response = await fetch(`${ENV.apiUrl}/rn/post/new/${userId}`, {
+        const response = await fetch(`${ENV.apiUrl}/microposts`, {
             method: 'POST',
             headers: {
                 'Content-Type': "application/json",
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.V0z1TcfuH6MgWtsXxcz0cejD1e6ES3lvfF6uqtU6CAg sbidI-yLTxe4iG_yxRPJeQ`
             },
             body: JSON.stringify(postData)
         });
@@ -53,16 +67,16 @@ export const createPost = (title, body, base64Data, imageType) => {
         dispatch({
             type: CREATE_POST,
             postData: {
-                _id: resData._id,
-                title: resData.title,
-                body: resData.body,
-                comments: resData.comments,
-                created: new Date(resData.created),
-                likes: resData.likes,
-                postedBy: {
-                    _id: resData.postedBy._id,
-                    name: resData.postedBy.name
-                }
+                // _id: resData._id,
+                // title: resData.title,
+                content: resData.body,
+                // comments: resData.comments,
+                // created: new Date(resData.created),
+                // likes: resData.likes,
+                // postedBy: {
+                //     _id: resData.postedBy._id,
+                //     name: resData.postedBy.name
+                // }
             }
         });
     }

@@ -81,7 +81,7 @@ const ImgPicker = props => {
         <View style={styles.imagePicker} >
             <View style={styles.imagePreview} >
                 { !pickedImage ? (
-                    <Text style={{ fontSize: 18 }} >No Image Picked</Text>
+                    <Text style={{ fontSize: 18 }} >No file chosen</Text>
                 ) : (
                     <Image
                         style={styles.image}
@@ -96,7 +96,7 @@ const ImgPicker = props => {
                     onPress={takeImageHandler.bind(this, 'gallery')}
                 >
                     <Text style={styles.loginText}>
-                        Pick Image
+                        Choose File
                     </Text>
                 </TouchableOpacity>
                 {/* <TouchableOpacity 

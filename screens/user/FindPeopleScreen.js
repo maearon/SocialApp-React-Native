@@ -17,7 +17,8 @@ import VerifiedUser from '../../constants/VerifiedUser';
 
 const FindPeopleScreen = (props) => {
 
-    const findPeopleUsers = useSelector(state => state.users.findPeople);
+    // const findPeopleUsers = useSelector(state => state.users.findPeople);
+    const findPeopleUsers = useSelector(state => state.users.allUsers);
 
     const [isLoading, setIsLoading] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
@@ -32,11 +33,13 @@ const FindPeopleScreen = (props) => {
         setError(null);
         setIsRefreshing(true);
         try {
-            const result = await dispatch(usersActions.fetchFindPeopleUsers());
+            // const result = await dispatch(usersActions.fetchFindPeopleUsers());
+            const result = await dispatch(usersActions.fetchUsers());
             let verifiedUsers =  result.filter(e => VerifiedUser.verifiedUsersId.includes(e._id));
             let otherUsers = result.filter(e => !VerifiedUser.verifiedUsersId.includes(e._id));
             let updatedResult = [...verifiedUsers, ...otherUsers];
             setData(updatedResult);
+            // setData(result);
         } catch (err) {
             setError(err.message);
         }
@@ -96,6 +99,20 @@ const FindPeopleScreen = (props) => {
         return (
             <View style={styles.centered} >
                 <Text>An error occured.</Text>
+                <Text>{error}</Text>
+                <Text>{JSON.stringify(findPeopleUsers)}</Text>
+                {/* <Text>{Object.keys(findPeopleUsers.users).length}</Text> */}
+                {/* {
+                    "users":
+                    [
+                        {"id":1,"name":"Example User","gravatar_id":"bebfcf57d6d8277d806a9ef3385c078d","size":50},
+                        {"id":2,"name":"Hosea West DO","gravatar_id":"03037e249b97891693d6e292289be0ff","size":50},
+                        {"id":3,"name":"Madalyn Crist","gravatar_id":"2065436fdfe2d27dc7f06b6787a4a1af","size":50},
+                        {"id":4,"name":"Jesse Marvin","gravatar_id":"4788f8d222055ddd54d12b75514cd8c3","size":50},
+                        {"id":5,"name":"Nikole Schuster","gravatar_id":"b0e247198b823a9bd5908730477b2cc2","size":50}
+                    ],
+                    "total_count":101
+                } */}
                 <Button onPress={loadFindPeople} color={Colors.primary} >
                     <Text>Try again</Text>
                 </Button>
@@ -113,42 +130,44 @@ const FindPeopleScreen = (props) => {
     }
 
     return (
-        <Container style={{ backgroundColor: '#fff' }} >
-            <Header style={{ backgroundColor: Colors.brightBlue }} searchBar rounded>
-                <Item>
-                    <Icon name="ios-search" />
-                    <Input
-                        value={searchText}
-                        onChangeText={(text) => handleSearchTextChange(text)}
-                        placeholder={`Search by name or email...`}
-                    />
-                    <Text>{data.length}</Text>
-                    <Icon name="ios-people"  />
-                </Item>
-            </Header>
-            { data.length === 0 && (
-                <View style={styles.centered}>
-                    <Text style={{ fontSize: 18, margin: 10 }} >No users found.</Text>
-                    <Text>Either you are already following the user</Text>
-                    <Text>or no user exists with that name.</Text>
-                </View>
-            ) }
-            <FlatList
-                style={styles.list}
-                refreshing={isRefreshing}
-                onRefresh={loadFindPeople}
-                contentContainerStyle={styles.listContainer}
-                data={data}
-                horizontal={false}
-                numColumns={2}
-                keyExtractor={(item) => {
-                    return item._id;
-                }}
-                renderItem={({ item }) => (
-                    <UserList item={item} followHandler={followHandlerForData} />
-                )} 
-            />
-        </Container>
+        // <Container style={{ backgroundColor: '#fff' }} >
+        //     <Header style={{ backgroundColor: Colors.brightBlue }} searchBar rounded>
+        //         <Item>
+        //             <Icon name="ios-search" />
+        //             <Input
+        //                 value={searchText}
+        //                 onChangeText={(text) => handleSearchTextChange(text)}
+        //                 placeholder={`Search by name or email...`}
+        //             />
+        //             <Text>{data.length}</Text>
+        //             <Icon name="ios-people"  />
+        //         </Item>
+        //     </Header>
+        //     { data.length === 0 && (
+        //         <View style={styles.centered}>
+        //             <Text style={{ fontSize: 18, margin: 10 }} >No users found.</Text>
+        //             <Text>Either you are already following the user</Text>
+        //             <Text>or no user exists with that name.</Text>
+        //         </View>
+        //     ) }
+        //     <FlatList
+        //         style={styles.list}
+        //         refreshing={isRefreshing}
+        //         onRefresh={loadFindPeople}
+        //         contentContainerStyle={styles.listContainer}
+        //         data={data}
+        //         horizontal={false}
+        //         numColumns={2}
+        //         keyExtractor={(item) => {
+        //             return item._id;
+        //         }}
+        //         renderItem={({ item }) => (
+        //             <UserList item={item} followHandler={followHandlerForData} />
+        //         )} 
+        //     />
+        // </Container>
+        
+        <></>
     );
 };
 

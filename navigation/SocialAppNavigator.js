@@ -236,7 +236,7 @@ export const BottomNavigator = () => {
                 name="AddPost"
                 component={CreatePostNavigator}
                 options={{
-                    tabBarLabel: 'Add Post',
+                    tabBarLabel: 'Add Micropost',
                     tabBarIcon: (props) => (
                         <Ionicons
                             name={Platform.OS === 'android' ? 'md-add-circle-outline' : 'ios-add-circle-outline'}

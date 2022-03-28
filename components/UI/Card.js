@@ -82,13 +82,14 @@ const Card = (props) => {
 
 
     return (
+        // <>{JSON.stringify(post)}</>
         <TouchableComp 
-            background={ Platform.OS === 'ios' ? undefined : TouchableNativeFeedback.Ripple('#b3b3b3') }
+            background={ Platform.OS === 'ios' ? TouchableNativeFeedback.Ripple('#b3b3b3') : undefined }
             onPress={() =>  
                 fromUserProfile ? 
                 {} 
                 : 
-                navigation.navigate('UserProfile', { userId: post.postedBy._id, name: post.postedBy.name }) }
+                navigation.navigate('UserProfile', { userId: post.id, name: post.user_name }) }
         >
             <View style={styles.card}>
                 <View style={styles.cardTitleHeader}>
@@ -96,16 +97,16 @@ const Card = (props) => {
                         <View style={styles.timeContainer}>
                             <Image
                                 style={styles.userIcon} 
-                                source={{ uri: imageUri || `${ENV.apiUrl}/user/photo/${post.postedBy._id}?${new Date(post.postedBy.updated)}` }}
+                                source={{ uri: "https://secure.gravatar.com/avatar/"+post.gravatar_id+"?s="+post.size }}
                                 onError={onImageErrorHandler}
                             />
                             <Text 
                                 style={{ fontSize: 15, alignSelf: 'center', paddingHorizontal: 10, paddingVertical: 5 }} 
-                                onPress={() => navigation.navigate('UserProfile', { userId: post.postedBy._id, name: post.postedBy.name })} 
+                                onPress={() => navigation.navigate('UserProfile', { userId: post.id, name: post.user_name })} 
                             > 
-                                {post.postedBy.name + " "}
+                                {post.user_name + " "}
                                 {
-                                    VerifiedUser.verifiedUsersId.includes(post.postedBy._id) && <Octicons name="verified" size={18} color={Colors.brightBlue} />
+                                    VerifiedUser.verifiedUsersId.includes(post.id) && <Octicons name="verified" size={18} color={Colors.brightBlue} />
                                 }
                             </Text>
                         </View>
@@ -115,31 +116,38 @@ const Card = (props) => {
                                 size= {14}
                                 style={{ marginTop: 3 }}
                             />
-                            <Text> {timeDifference(new Date(), new Date(post.created))} </Text>
+                            <Text> {'Posted '+post.timestamp+' ago. '} </Text>
                         </View>
                     </View>
                 </View>
+                { post.image && (
+                <>
                 <View style={styles.cardImageContainer} >
                     <Image 
-                        style={{...styles.cardImage, height: imgHeight }}
-                        source={{ uri: `${ENV.apiUrl}/post/photo/${post._id}?${new Date(post.updated)}` }}
+                        // style={{...styles.cardImage, height: imgHeight }}
+                        style={{width: 500, height: 200 }}
+                        source={{ uri: post.image }}
                         onLoad={() => setIsImageLoading(false)}
                     />
+                    
                     <ActivityIndicator 
                         style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }} 
                         animating={isImageLoading} 
                         size='large' 
                         color={Colors.brightBlue} 
                     />
+                    
                 </View>
+                </>
+                )}
                 <View style={styles.cardHeader}>
                     <View>
-                        <Text style={styles.title}>{post.title ? post.title : ""}</Text>
-                        { post.body && post.body.length > 30 ? (
+                        <Text style={styles.title}>{post.content ? post.content : ""}</Text>
+                        { post.content && post.content.length > 30 ? (
                             <View>
                                 { showFullBody ? (
                                     <Text style={styles.description}> 
-                                        {post.body} 
+                                        {post.content} 
                                         <Text
                                             style={{ color: Colors.brightBlue }}
                                             onPress={() => setShowFullBody((prevState) => !prevState)} 
@@ -149,7 +157,7 @@ const Card = (props) => {
                                     </Text>
                                 ) : (
                                     <Text style={styles.description}> 
-                                        {post.body.substring(0, 30)}
+                                        {post.content.substring(0, 30)}
                                         <Text
                                             style={{ color: Colors.brightBlue }}
                                             onPress={() => setShowFullBody((prevState) => !prevState)} 
@@ -161,7 +169,7 @@ const Card = (props) => {
 
                             </View>
                         ) : (
-                            <Text style={styles.description}> {post.body} </Text>
+                            <Text style={styles.description}> {post.content} </Text>
                         ) }
                         
                     </View>
@@ -178,22 +186,26 @@ const Card = (props) => {
                                     name="md-thumbs-up"
                                     size={24}
                                     style={{ marginRight: 5 }}
-                                    color={checkLike() ? 'blue' : "black"}
+                                    // color={checkLike() ? 'blue' : "black"}
+                                    color={'blue'}
                                 />
-                                <Text style={styles.socialBarLabel}> {post.likes.length} </Text>
+                                {/* <Text style={styles.socialBarLabel}> {post.likes.length} </Text> */}
+                                <Text style={styles.socialBarLabel}> {3} </Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.socialBarSection}>
                             <TouchableOpacity 
                                 style={styles.socialBarButton}
-                                onPress={() => navigation.navigate('Comments',{ postId: post._id, userId: userId })}
+                                // onPress={() => navigation.navigate('Comments',{ postId: post._id, userId: userId })}
+                                onPress={() => navigation.navigate('Comments',{ postId: post.id, userId: 1 })}
                             >
                                 <Ionicons 
                                     name="md-chatboxes"
                                     size={24}
                                     style={{ marginRight: 5 }}
                                 />
-                                <Text style={styles.socialBarLabel}> {post.comments.length} </Text>
+                                {/* <Text style={styles.socialBarLabel}> {post.comments.length} </Text> */}
+                                <Text style={styles.socialBarLabel}> {3} </Text>
                             </TouchableOpacity>
                         </View>
                         
@@ -201,20 +213,25 @@ const Card = (props) => {
                     </View>
                 </View>
                 <TouchableOpacity 
-                    onPress={() => navigation.navigate('Comments', { postId: post._id, userId: userId })}
+                    // onPress={() => navigation.navigate('Comments', { postId: post._id, userId: userId })}
+                    onPress={() => navigation.navigate('Comments', { postId: post.id, userId: 1 })}
                 >
-                    { post.comments.length > 0 ? (
-                        <Text style={{ paddingHorizontal: 16, paddingBottom: 15, paddingTop: 5 }} >View all {post.comments.length} comments </Text>
+                    {/* { post.comments.length > 0 ? ( */}
+                    { 3 > 0 ? (
+                        // <Text style={{ paddingHorizontal: 16, paddingBottom: 15, paddingTop: 5 }} >View all {post.comments.length} comments </Text>
+                        <Text style={{ paddingHorizontal: 16, paddingBottom: 15, paddingTop: 5 }} >View all {3} comments </Text>
                     ) : (
                         <Text style={{ paddingHorizontal: 16, paddingBottom: 15, paddingTop: 5 }} >Comment here </Text>
                     ) }
                 </TouchableOpacity>
-                { post.postedBy._id === userId && (
+                {/* { post.postedBy._id === userId && ( */}
+                { post.user_id === userId && (
                     <View style={styles.postActions} >
                         <View style={styles.socialBarSection}>
                             <TouchableOpacity 
                                 style={styles.socialBarButton}
-                                onPress={deleteHandler.bind(this, post._id)}
+                                // onPress={deleteHandler.bind(this, post._id)}
+                                onPress={deleteHandler.bind(this, post.id)}
                             >
                                 <MaterialCommunityIcons 
                                     name="delete"
@@ -228,7 +245,8 @@ const Card = (props) => {
                         <View style={styles.socialBarSection}>
                             <TouchableOpacity 
                                 style={styles.socialBarButton}
-                                onPress={() => navigation.navigate('EditPost', { postId: post._id })}
+                                // onPress={() => navigation.navigate('EditPost', { postId: post._id })}
+                                onPress={() => navigation.navigate('EditPost', { postId: post.id })}
                             >
                                 <MaterialCommunityIcons 
                                     name="square-edit-outline"
@@ -300,8 +318,8 @@ const styles = StyleSheet.create({
     },
     cardImage: {
         flex: 1,
-        // height: 275,
-        width: null
+        height: 275,
+        width: 200
     },
     /******** card components **************/
     title: {

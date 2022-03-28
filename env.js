@@ -1,5 +1,5 @@
 const vars = {
-  apiUrl: "https://socialapp-serverr.herokuapp.com",
+  apiUrl: "http://localhost:3001/api",
   defaultImageUri: "https://socialapp-serverr.herokuapp.com/static/images/defaultprofile.jpg"
 };
 

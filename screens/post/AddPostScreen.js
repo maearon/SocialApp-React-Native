@@ -62,33 +62,33 @@ const AddPostScreen = (props) => {
         }
 
 
-        if(!title || title.length === 0){
-            showMessage({
-                message: "Please enter a title.",
-                type: "danger",
-                duration: 3000,
-                icon: { icon: "danger", position: 'left' }
-            });
-            return false;
-        }
+        // if(!title || title.length === 0){
+        //     showMessage({
+        //         message: "Please enter a title.",
+        //         type: "danger",
+        //         duration: 3000,
+        //         icon: { icon: "danger", position: 'left' }
+        //     });
+        //     return false;
+        // }
         if(!body || body.length === 0){
             showMessage({
-                message: "Please enter a body.",
+                message: "Please enter a content.",
                 type: "danger",
                 duration: 3000,
                 icon: { icon: "danger", position: 'left' }
             });
             return false;
         }
-        if(base64Data.length === 0 ){
-            showMessage({
-                message: "Please select an image to post.",
-                type: "danger",
-                duration: 3000,
-                icon: { icon: "danger", position: 'left' }
-            });
-            return false;
-        }
+        // if(base64Data.length === 0 ){
+        //     showMessage({
+        //         message: "Please select an image to post.",
+        //         type: "danger",
+        //         duration: 3000,
+        //         icon: { icon: "danger", position: 'left' }
+        //     });
+        //     return false;
+        // }
 
         return true;
     }
@@ -139,7 +139,7 @@ const AddPostScreen = (props) => {
                         onImageTaken={imagePickedHandler}
                         clearPickedImage={clearPickedImage}
                     />
-                    <View style={styles.labelContainer} >
+                    {/* <View style={styles.labelContainer} >
                         <Text style={styles.labelText} >Title</Text>
                     </View>
                     <View style={styles.inputContainer}>
@@ -149,13 +149,13 @@ const AddPostScreen = (props) => {
                             value={title}
                             onChangeText={(text) => setTitle(text) }
                         />
-                    </View>
+                    </View> */}
                     <View style={styles.labelContainer} >
-                        <Text style={styles.labelText} >Body</Text>
+                        <Text style={styles.labelText} >Content</Text>
                     </View>
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
-                            placeholder="Body"
+                            placeholder="Compose new micropost..."
                             underlineColorAndroid='transparent'
                             value={body}
                             onChangeText={(text) => setBody(text) }
@@ -182,7 +182,7 @@ const AddPostScreen = (props) => {
 
 
 export const screenOptions = {
-    headerTitle: 'Create Post'
+    headerTitle: 'Create Micropost'
 }
 
 const styles = StyleSheet.create({

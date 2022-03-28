@@ -53,15 +53,18 @@ export const signup = (name, email, password, expoPushToken) => {
 
 export const signin = (email, password, expoPushToken) => {
     return async dispatch => {
-        const response = await fetch(`${ENV.apiUrl}/signin`, {
+        const response = await fetch(`${ENV.apiUrl}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: email,
-                password: password,
-                notificationToken: expoPushToken
+                session: {
+                    email: email,
+                    password: password,
+                    remember_me: true ? "1" : "1",
+                    notificationToken: expoPushToken
+                }
             })
         });
 

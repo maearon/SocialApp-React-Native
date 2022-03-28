@@ -20,7 +20,7 @@ const AllPostsScreen = (props) => {
 
     const refPosts = useRef(null);
 
-    const posts = useSelector(state => state.posts.allPosts);
+    const feed_items = useSelector(state => state.posts.allPosts);
     const loggedUser = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
     const navigation = useNavigation();
@@ -32,7 +32,7 @@ const AllPostsScreen = (props) => {
         try {
             await dispatch(postsActions.fetchPosts());
             await dispatch(usersActions.fetchUsers());
-            await dispatch(chatActions.fetchChatList());
+            // await dispatch(chatActions.fetchChatList());
 
         } catch (err) {
             setError(err.message);
@@ -87,7 +87,7 @@ const AllPostsScreen = (props) => {
     if(error){
         return (
             <View style={styles.centered} >
-                <Text>An error occured.</Text>
+                <Text>An error occured.{typeof(error)}</Text>
                 <Button title="Try again" onPress={loadPosts} color={Colors.primary} />
             </View>
         );
@@ -103,34 +103,47 @@ const AllPostsScreen = (props) => {
     }
 
 
-    if(!isLoading && posts.length === 0){
+    if(!isLoading && feed_items.length === 0){
         return(
             <View style={styles.centered} >
-                <Text>No posts found. Maybe start adding some!</Text>
+                <Text>No feed_items found. Maybe start adding some!</Text>
             </View>
         );
     }
 
+    const renderItem = (post) => {
+        console.log("feed_items - ",post.id);
+        return (
+            <Card post={feed_items.feed_items[1]} userId={1} toggleLikeHandler={toggleLikeHandler} />
+        )
+    };
+
     return (
         <View style={styles.screen} >
+            {/* {feed_items.feed_items.length > 0 &&
+            <>
+                { feed_items.feed_items.map((i, t) => (
+                    <>{JSON.stringify(feed_items)}</>
+                ))}
+            </>
+            } */}
             <FlatList
+                data={feed_items.feed_items}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+
                 ref={refPosts}
                 style={styles.list}
                 onRefresh={loadPosts}
                 refreshing={isRefreshing}
-                data={posts}
-                keyExtractor={(item) => item._id }
+                
+
                 ItemSeparatorComponent={() => {
                     return (
                         <View style={styles.separator} />
                     )
                 }}
-                renderItem={(post) => {
-                    console.log("posts - ",post.index);
-                    return (
-                        <Card post={post.item} userId={loggedUser._id} toggleLikeHandler={toggleLikeHandler} />
-                    )
-                }} 
+                 
             />
 
         </View>

@@ -9,7 +9,12 @@ export const FOLLOW_FIND_PEOPLE = 'FOLLOW_FIND_PEOPLE';
 
 export const fetchUsers = () => {
     return async (dispatch, getState) => {
-        const response = await fetch(`${ENV.apiUrl}/users`);
+        const response = await fetch(`${ENV.apiUrl}/users`, {
+            headers: {
+                'Content-Type': "application/json",
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.V0z1TcfuH6MgWtsXxcz0cejD1e6ES3lvfF6uqtU6CAg PaAp1tWxAtCtYMcgge8-9Q`
+            },
+        });
 
         const resData = await response.json();
         if(resData.error){
