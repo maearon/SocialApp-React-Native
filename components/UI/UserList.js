@@ -21,25 +21,25 @@ import VerifiedUser from '../../constants/VerifiedUser';
 const UserList = (props) => {
     const { item, followHandler } = props;
     // const [imageUri, setImageUri] = useState(`${ENV.apiUrl}/user/photo/${item._id}`)
-    const [imageUri, setImageUri] = useState("https://secure.gravatar.com/avatar/bebfcf57d6d8277d806a9ef3385c078d?s=50")
+    // const [imageUri, setImageUri] = useState("https://secure.gravatar.com/avatar/bebfcf57d6d8277d806a9ef3385c078d?s=50")
 
 
-    const loggedInUserId = useSelector(state => state.auth.user._id);
-    const allUsers = useSelector(state => state.users.allUsers);
-    const loggedInUser = allUsers.filter(u => u._id === loggedInUserId)[0];
+    // const loggedInUserId = useSelector(state => state.auth.user._id);
+    // const allUsers = useSelector(state => state.users.allUsers);
+    // const loggedInUser = allUsers.filter(u => u._id === loggedInUserId)[0];
 
-    const dispatch = useDispatch();
-    const navigation = useNavigation();
+    // const dispatch = useDispatch();
+    // const navigation = useNavigation();
 
     const onImageErrorHandler = () => {
         setImageUri(ENV.defaultImageUri);   
     }
 
-    const checkFollow = (userId) => {
-        // const isFollowed = loggedInUser.following.filter(f => f._id === userId).length !== 0;
-        const isFollowed = true;
-        return isFollowed;
-    }
+    // const checkFollow = (userId) => {
+    //     // const isFollowed = loggedInUser.following.filter(f => f._id === userId).length !== 0;
+    //     const isFollowed = true;
+    //     return isFollowed;
+    // }
 
     const followUserHandler = async () => {
         if(checkFollow(item._id)){
@@ -70,33 +70,34 @@ const UserList = (props) => {
         >
             <Image 
                 style={styles.userImage} 
-                source={{ uri: imageUri }}
+                source={{ uri: "https://secure.gravatar.com/avatar/bebfcf57d6d8277d806a9ef3385c078d?s=50" }}
                 onError={onImageErrorHandler}
             />
             <View style={styles.cardFooter}>
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
                     <Text
-                        onPress={() => navigation.navigate('UserProfile',{ userId: item._id, name: item.name} )}
+                        onPress={() => navigation.navigate('UserProfile',{ userId: item.id, name: item.name} )}
                         style={{...styles.name, marginRight: 10}}
                     >
-                        {item.name.length > 10 ? (
+                        {"Example User"}
+                        {/* {item.name.length > 10 ? (
                             <>{item.name.substring(0,10)}... </>
                         ) : (
                             <>{item.name + " "}</>
                         )}
-                        {
-                            VerifiedUser.verifiedUsersId.includes(item.id) && <Octicons name="verified" size={20} color={Colors.brightBlue} />
-                        }
+                        { VerifiedUser.verifiedUsersId.includes(item.id) && (
+                        <>
+                        <Octicons name="verified" size={20} color={Colors.brightBlue} />
+                        </>  
+                        )} */}
                     </Text>
                     <Text style={styles.position}>
-                        {/* {item.email.length > 15 ? ( */}
-                        {item.name.length > 15 ? (
-                            // <>{item.email.substring(0,15)}...</>
+                        {"example@railstutorial.org"}
+                        {/* {item.name.length > 15 ? (
                             <>{item.name.substring(0,15)}...</>
                         ) : (
-                            // <>{item.email}</>
                             <>{item.name}</>
-                        )}
+                        )} */}
                     </Text>
                     <TouchableOpacity style={styles.followButton}>
                         <Text onPress={followUserHandler} style={styles.followButtonText} >
@@ -106,6 +107,7 @@ const UserList = (props) => {
                 </View>
             </View>
         </TouchableOpacity>
+        // <><Text>{JSON.stringify(item)}</Text></>
     )
 }
 
