@@ -17,7 +17,7 @@ export const fetchPosts = () => {
         const response = await fetch(`${ENV.apiUrl}`, {
             headers: {
                 'Content-Type': "application/json",
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.V0z1TcfuH6MgWtsXxcz0cejD1e6ES3lvfF6uqtU6CAg PaAp1tWxAtCtYMcgge8-9Q`
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.V0z1TcfuH6MgWtsXxcz0cejD1e6ES3lvfF6uqtU6CAg TB4PNMHlMGyzdVwuHVLweQ`
             },
         });
 

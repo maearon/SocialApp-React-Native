@@ -18,7 +18,8 @@ import VerifiedUser from '../../constants/VerifiedUser';
 const FindPeopleScreen = (props) => {
 
     // const findPeopleUsers = useSelector(state => state.users.findPeople);
-    const findPeopleUsers = useSelector(state => state.users.allUsers);
+    const findPeopleUsers = useSelector(state => state.users.allUsers.users);
+    const totalCount = useSelector(state => state.users.allUsers.total_count);
 
     const [isLoading, setIsLoading] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
@@ -101,6 +102,7 @@ const FindPeopleScreen = (props) => {
                 <Text>An error occured.</Text>
                 <Text>{error}</Text>
                 <Text>{JSON.stringify(findPeopleUsers)}</Text>
+                <Text>{totalCount}</Text>
                 {/* <Text>{Object.keys(findPeopleUsers.users).length}</Text> */}
                 {/* {
                     "users":
