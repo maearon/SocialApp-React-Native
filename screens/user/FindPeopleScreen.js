@@ -165,7 +165,8 @@ const FindPeopleScreen = (props) => {
                     <Text>or no user exists with that name.</Text>
                 </View>
             ) }
-            {/* <FlatList
+            {/* <Text>{JSON.stringify(data)}</Text> */}
+            <FlatList
                 style={styles.list}
                 refreshing={isRefreshing}
                 onRefresh={loadFindPeople}
@@ -179,7 +180,7 @@ const FindPeopleScreen = (props) => {
                 renderItem={({ item }) => (
                     <UserList item={item} followHandler={followHandlerForData} />
                 )} 
-            /> */}
+            />
         </Container>    
         // <></>
     );

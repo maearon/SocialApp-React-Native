@@ -20,7 +20,8 @@ import VerifiedUser from '../../constants/VerifiedUser';
 
 const UserList = (props) => {
     const { item, followHandler } = props;
-    const [imageUri, setImageUri] = useState(`${ENV.apiUrl}/user/photo/${item._id}`)
+    // const [imageUri, setImageUri] = useState(`${ENV.apiUrl}/user/photo/${item._id}`)
+    const [imageUri, setImageUri] = useState("https://secure.gravatar.com/avatar/bebfcf57d6d8277d806a9ef3385c078d?s=50")
 
 
     const loggedInUserId = useSelector(state => state.auth.user._id);
@@ -35,7 +36,8 @@ const UserList = (props) => {
     }
 
     const checkFollow = (userId) => {
-        const isFollowed = loggedInUser.following.filter(f => f._id === userId).length !== 0;
+        // const isFollowed = loggedInUser.following.filter(f => f._id === userId).length !== 0;
+        const isFollowed = true;
         return isFollowed;
     }
 
@@ -63,7 +65,7 @@ const UserList = (props) => {
 
     return (
         <TouchableOpacity 
-            onPress={() => navigation.navigate('UserProfile', {userId: item._id, name: item.name} )}
+            onPress={() => navigation.navigate('UserProfile', {userId: item.id, name: item.name} )}
             style={styles.card}
         >
             <Image 
@@ -83,20 +85,23 @@ const UserList = (props) => {
                             <>{item.name + " "}</>
                         )}
                         {
-                            VerifiedUser.verifiedUsersId.includes(item._id) && <Octicons name="verified" size={20} color={Colors.brightBlue} />
+                            VerifiedUser.verifiedUsersId.includes(item.id) && <Octicons name="verified" size={20} color={Colors.brightBlue} />
                         }
                     </Text>
                     <Text style={styles.position}>
-                        {item.email.length > 15 ? (
-                            <>{item.email.substring(0,15)}...</>
+                        {/* {item.email.length > 15 ? ( */}
+                        {item.name.length > 15 ? (
+                            // <>{item.email.substring(0,15)}...</>
+                            <>{item.name.substring(0,15)}...</>
                         ) : (
-                            <>{item.email}</>
+                            // <>{item.email}</>
+                            <>{item.name}</>
                         )}
                     </Text>
                     <TouchableOpacity style={styles.followButton}>
-                        <Text
-                            onPress={followUserHandler}
-                            style={styles.followButtonText}>Follow</Text>
+                        <Text onPress={followUserHandler} style={styles.followButtonText} >
+                            Follow
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </View>
