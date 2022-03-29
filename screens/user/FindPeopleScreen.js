@@ -35,9 +35,22 @@ const FindPeopleScreen = (props) => {
         setIsRefreshing(true);
         try {
             // const result = await dispatch(usersActions.fetchFindPeopleUsers());
-            const result = await dispatch(usersActions.fetchUsers());
-            let verifiedUsers =  result.filter(e => VerifiedUser.verifiedUsersId.includes(e._id));
-            let otherUsers = result.filter(e => !VerifiedUser.verifiedUsersId.includes(e._id));
+            // const result = await dispatch(usersActions.fetchUsers());
+            const result = {
+                "users":
+                [
+                    {"id":1,"name":"Example User","gravatar_id":"bebfcf57d6d8277d806a9ef3385c078d","size":50},
+                    {"id":2,"name":"Hosea West DO","gravatar_id":"03037e249b97891693d6e292289be0ff","size":50},
+                    {"id":3,"name":"Madalyn Crist","gravatar_id":"2065436fdfe2d27dc7f06b6787a4a1af","size":50},
+                    {"id":4,"name":"Jesse Marvin","gravatar_id":"4788f8d222055ddd54d12b75514cd8c3","size":50},
+                    {"id":5,"name":"Nikole Schuster","gravatar_id":"b0e247198b823a9bd5908730477b2cc2","size":50}
+                ],
+                "total_count":101
+            } 
+            // let verifiedUsers =  result.users.filter(e => VerifiedUser.verifiedUsersId.includes(e.id));
+            // let otherUsers = result.users.filter(e => !VerifiedUser.verifiedUsersId.includes(e.id));
+            let verifiedUsers =  result.users.filter(e => ["1"].includes(e.id));
+            let otherUsers = result.users.filter(e => !["1"].includes(e.id));
             let updatedResult = [...verifiedUsers, ...otherUsers];
             setData(updatedResult);
             // setData(result);
@@ -90,7 +103,7 @@ const FindPeopleScreen = (props) => {
     const followHandlerForData = (id) => {
         //follow handler to remove item from search data i.e. data state
         let searchData = data;
-        searchData = searchData.filter(i => i._id !== id);
+        searchData = searchData.filter(i => i.id !== id);
         setData(searchData);
     }
 
