@@ -109,9 +109,9 @@ export const logout = () => {
     };
 }
 
-
+// AsyncStorage same LocalStorage in WebAssembly, Redũ save state to cache
 const saveDataToStorage = (token, user) => {
-    AsyncStorage.setItem('userData', JSON.stringify({
+    AsyncStorage.setItem('userData', JSON.stringify({ 
         token,
         user
     }));
