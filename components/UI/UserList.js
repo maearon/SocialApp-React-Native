@@ -79,7 +79,8 @@ const UserList = (props) => {
                         onPress={() => navigation.navigate('UserProfile',{ userId: item.id, name: item.name} )}
                         style={{...styles.name, marginRight: 10}}
                     >
-                        {"Example User"}
+                        {"Example User "}
+                        <Octicons name="verified" size={20} color={Colors.brightBlue} />
                         {/* {item.name.length > 10 ? (
                             <>{item.name.substring(0,10)}... </>
                         ) : (
