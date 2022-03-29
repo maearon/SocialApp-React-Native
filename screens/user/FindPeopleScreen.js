@@ -145,44 +145,43 @@ const FindPeopleScreen = (props) => {
     }
 
     return (
-        // <Container style={{ backgroundColor: '#fff' }} >
-        //     <Header style={{ backgroundColor: Colors.brightBlue }} searchBar rounded>
-        //         <Item>
-        //             <Icon name="ios-search" />
-        //             <Input
-        //                 value={searchText}
-        //                 onChangeText={(text) => handleSearchTextChange(text)}
-        //                 placeholder={`Search by name or email...`}
-        //             />
-        //             <Text>{data.length}</Text>
-        //             <Icon name="ios-people"  />
-        //         </Item>
-        //     </Header>
-        //     { data.length === 0 && (
-        //         <View style={styles.centered}>
-        //             <Text style={{ fontSize: 18, margin: 10 }} >No users found.</Text>
-        //             <Text>Either you are already following the user</Text>
-        //             <Text>or no user exists with that name.</Text>
-        //         </View>
-        //     ) }
-        //     <FlatList
-        //         style={styles.list}
-        //         refreshing={isRefreshing}
-        //         onRefresh={loadFindPeople}
-        //         contentContainerStyle={styles.listContainer}
-        //         data={data}
-        //         horizontal={false}
-        //         numColumns={2}
-        //         keyExtractor={(item) => {
-        //             return item._id;
-        //         }}
-        //         renderItem={({ item }) => (
-        //             <UserList item={item} followHandler={followHandlerForData} />
-        //         )} 
-        //     />
-        // </Container>
-        
-        <></>
+        <Container style={{ backgroundColor: '#fff' }} >
+            <Header style={{ backgroundColor: Colors.brightBlue }} searchBar rounded>
+                <Item>
+                    <Icon name="ios-search" />
+                    <Input
+                        value={searchText}
+                        onChangeText={(text) => handleSearchTextChange(text)}
+                        placeholder={`Search by name or email...`}
+                    />
+                    <Text>{data.length}</Text>
+                    <Icon name="ios-people"  />
+                </Item>
+            </Header>
+            { data.length === 0 && (
+                <View style={styles.centered}>
+                    <Text style={{ fontSize: 18, margin: 10 }} >No users found.</Text>
+                    <Text>Either you are already following the user</Text>
+                    <Text>or no user exists with that name.</Text>
+                </View>
+            ) }
+            {/* <FlatList
+                style={styles.list}
+                refreshing={isRefreshing}
+                onRefresh={loadFindPeople}
+                contentContainerStyle={styles.listContainer}
+                data={data}
+                horizontal={false}
+                numColumns={2}
+                keyExtractor={(item) => {
+                    return item._id;
+                }}
+                renderItem={({ item }) => (
+                    <UserList item={item} followHandler={followHandlerForData} />
+                )} 
+            /> */}
+        </Container>    
+        // <></>
     );
 };
 
