@@ -166,7 +166,7 @@ const FindPeopleScreen = (props) => {
                 </View>
             ) }
             {/* <Text>{JSON.stringify(data)}</Text> */}
-            {/* <FlatList
+            <FlatList
                 style={styles.list}
                 refreshing={isRefreshing}
                 onRefresh={loadFindPeople}
@@ -180,8 +180,8 @@ const FindPeopleScreen = (props) => {
                 renderItem={({ item }) => (
                     <UserList item={item} followHandler={followHandlerForData} />
                 )} 
-            /> */}
-            <UserList item={data[0]} followHandler={followHandlerForData} />
+            />
+            {/* <UserList item={data[0]} followHandler={followHandlerForData} /> */}
         </Container>    
         // <></>
     );
